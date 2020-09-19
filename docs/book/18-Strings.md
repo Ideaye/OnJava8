@@ -47,7 +47,7 @@ String x = Immutable.upcase(s);
 
 
 <!-- Overloading + vs. StringBuilder -->
-## `+` 的重载与 `StringBuilder`
+## + 的重载与 StringBuilder
 `String` 对象是不可变的，你可以给一个 `String` 对象添加任意多的别名。因为 `String` 是只读的，所以指向它的任何引用都不可能修改它的值，因此，也就不会影响到其他引用。
 
 不可变性会带来一定的效率问题。为 `String` 对象重载的 `+` 操作符就是一个例子。重载的意思是，一个操作符在用于特定的类时，被赋予了特殊的意义（用于 `String` 的 `+` 与 `+=` 是 Java 中仅有的两个重载过的操作符，Java 不允许程序员重载任何其他的操作符 [^1]）。
@@ -125,7 +125,7 @@ public class WhitherStringBuilder {
     }
 }
 ```
-现在运行 `javap -c WitherStringBuilder`，可以看到两种不同方法（我已经去掉不相关的细节）对应的字节码。首先是 `implicit()` 方法：
+现在运行 `javap -c WhitherStringBuilder`，可以看到两种不同方法（我已经去掉不相关的细节）对应的字节码。首先是 `implicit()` 方法：
 ```x86asm
 public java.lang.String implicit(java.lang.String[]); 
 0: ldc #2 // String 
@@ -273,7 +273,7 @@ import java.util.stream.*;
 public class InfiniteRecursion { 
     @Override 
     public String toString() { 
-        return " InfiniteRecursion address: " + this + "\n"
+        return " InfiniteRecursion address: " + this + "\n";
     } 
     public static void main(String[] args) { 
         Stream.generate(InfiniteRecursion::new) 
@@ -801,10 +801,10 @@ the mightiest banana in the forest...with... a banana!
 | 表达式 | 含义 |
 | :---- | :---- |
 | `.` | 任意字符 |
-| `[abc]` |包含`a`、`b`或`c`的任何字符（和`a|b|c`作用相同）|
+| `[abc]` |包含`a`、`b`或`c`的任何字符（和`a\|b\|c`作用相同）|
 | `[^abc]` | 除`a`、`b`和`c`之外的任何字符（否定） |
 | `[a-zA-Z]` | 从`a`到`z`或从`A`到`Z`的任何字符（范围） |
-| `[abc[hij]]` | `a`、`b`、`c`、`h`、`i`、`j`中的任意字符（与`a|b|c|h|i|j`作用相同）（合并） |
+| `[abc[hij]]` | `a`、`b`、`c`、`h`、`i`、`j`中的任意字符（与`a\|b\|c\|h\|i\|j`作用相同）（合并） |
 | `[a-z&&[hij]]` | 任意`h`、`i`或`j`（交） |
 | `\s` | 空白符（空格、tab、换行、换页、回车） |
 | `\S` | 非空白符（`[^\s]`） |
@@ -818,7 +818,7 @@ the mightiest banana in the forest...with... a banana!
 | 逻辑操作符 | 含义 |
 | :----: | :---- |
 | `XY` | `Y`跟在`X`后面 |
-| `X|Y` | `X`或`Y` |
+| `X\|Y` | `X`或`Y` |
 | `(X)` | 捕获组（capturing group）。可以在表达式中用`\i`引用第i个捕获组 |
 
 下面是不同的边界匹配符：
@@ -1079,9 +1079,9 @@ public class StartEnd {
         while(m.find())       
             d.display("find() '" + m.group() +         
               "' start = "+ m.start() + " end = " + m.end());     
-            if(m.lookingAt()) // No reset() necessary       
-                d.display("lookingAt() start = "         
-                  + m.start() + " end = " + m.end());     
+        if(m.lookingAt()) // No reset() necessary       
+            d.display("lookingAt() start = "         
+              + m.start() + " end = " + m.end());     
         if(m.matches()) // No reset() necessary       
             d.display("matches() start = "         
               + m.start() + " end = " + m.end());   
